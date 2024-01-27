@@ -1,0 +1,190 @@
+id: https://w3id.org/biolink/biolinkml/venomx
+name: venomx
+title: venomx
+description: Vector Embedding Named Object Model indeX
+license: https://creativecommons.org/publicdomain/zero/1.0/
+prefixes:
+  venomx: https://w3id.org/biolink/biolinkml/venomx/
+  linkml: https://w3id.org/linkml/
+
+default_prefix: venomx
+imports:
+  - linkml:types
+  - embedding
+
+classes:
+  Index:
+    tree_root: true
+    description: >-
+      A collection of named objects
+    attributes:
+      id:
+        description: The identifier for index
+        range: string
+      prefixes:
+        description: The prefix map for index
+        range: Prefix
+        multivalued: true
+        slot_uri: sh:declare
+      dataset:
+        description: The dataset for named objects
+        range: Dataset
+      embeddings:
+        description: The embeddings for named objects
+        range: Embedding
+        multivalued: true
+        inlined_as_list: true
+      embeddings_frame:
+        description: Can be a dataframe, pyarrow object...
+        range: Any
+      embeddings_dimensions:
+        description: The number of dimensions for the embeddings
+        range: integer
+        comments:
+          - optional as can be derived from array objects in most cases
+      embedding_model:
+        description: The embedding model for dataset
+        range: Model
+      embedding_input_method:
+        description: The method used to generate the input for the embedding model
+        range: ModelInputMethod
+      objects:
+        description: The named objects
+        range: NamedObject
+        multivalued: true
+        inlined_as_list: true
+      is_external:
+        description: Whether the objects are external
+        range: boolean
+      md5:
+        description: The md5 for the index
+        range: string
+
+  Prefix:
+    description: >-
+      A prefix
+    attributes:
+      prefix:
+        description: The prefix for prefix
+        range: string
+        slot_uri: sh:prefix
+      namespace:
+        description: The expansion for prefix
+        range: string
+        slot_uri: sh:namespace
+
+  Dataset:
+    description: >-
+      A description of the dataset that the index is over. Note that this is not intended to be
+      a comprehensive description of the dataset (use other standards for this), but enough to
+      give context to the index.
+    attributes:
+      name:
+        description: The name for dataset
+        range: string
+      identifiers:
+        description: Identifiers for the dataset
+        range: string
+        multivalued: true
+      filesystem_path:
+        description: The filesystem path for dataset
+        range: string
+      url:
+        description: The url for dataset
+        range: uri
+      title:
+        description: The label for dataset
+        range: string
+      source:
+        description: The source for dataset
+        range: uri
+      version:
+        description: The version for dataset
+        range: string
+      metadata:
+        description: The metadata for dataset
+        range: MetadataObject
+        multivalued: true
+
+  Model:
+    description: >-
+      A model
+    attributes:
+      name:
+        description: The name for model
+        range: string
+      identifiers:
+        description: Identifiers for the model
+        range: string
+        multivalued: true
+      url:
+        description: The url for model
+        range: uri
+      title:
+        description: The label for model
+        range: string
+      source:
+        description: The source for model
+        range: uri
+      version:
+        aliases:
+          - checkpoint
+        description: The version for model
+        range: string
+      metadata:
+        description: The metadata for model
+        range: MetadataObject
+        multivalued: true
+
+  ModelInputMethod:
+    description: A method for generating the input for an embedding model.
+      This might be as simple as extracting the label (name) of the object, or
+      it might be involve concatenation of multiple fields.
+    attributes:
+      fields:
+        description: The fields for model input method
+        range: string
+        multivalued: true
+
+  NamedObject:
+    description: >-
+      A named object
+    attributes:
+      id:
+        description: The identifier for named object
+        range: string
+        identifier: true
+      label:
+        description: The label for named object
+        range: string
+      metadata:
+        description: The metadata for named object
+        range: MetadataObject
+        multivalued: true
+
+  Embedding:
+    attributes:
+      id:
+        description: The identifier for named object
+        range: string
+        identifier: true
+      text:
+        description: The text for named object
+        range: string
+      values:
+        implements: linkml:Array
+        description: The embedding for named object
+        range: float
+        multivalued: true
+
+  MetadataObject:
+    description: >-
+      A metadata object
+    attributes:
+      key:
+        key: true
+      value:
+        range: Any
+
+  Any:
+    class_uri: linkml:Any

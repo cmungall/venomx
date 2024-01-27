@@ -1,0 +1,24 @@
+{
+  "template": "https://github.com/monarch-initiative/monarch-project-template",
+  "commit": "71f0cbdbfc1f68c2a4c771d13c9bd82a362ef046",
+  "checkout": null,
+  "context": {
+    "cookiecutter": {
+      "project_name": "venomx",
+      "github_org_name": "cmungall",
+      "__project_slug": "venomx",
+      "project_description": "Vector Embedding Named Object Model eXchange Format",
+      "min_python_version": "3.9",
+      "file_name": "main",
+      "greeting_recipient": "World",
+      "full_name": "Author 1",
+      "email": "author@org.org",
+      "__author": "Author 1 <author@org.org>",
+      "license": "BSD-3",
+      "github_token_for_doc_deployment": "GH_TOKEN",
+      "github_token_for_pypi_deployment": "PYPI_TOKEN",
+      "_template": "https://github.com/monarch-initiative/monarch-project-template"
+    }
+  },
+  "directory": null
+}

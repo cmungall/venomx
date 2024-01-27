@@ -1,0 +1,31 @@
+# LinkML schema for venomx
+id: https://w3id.org/biolink/biolinkml/venomx
+name: venomx
+title: venomx
+description: Vector Embedding Named Object Model indeX
+license: https://creativecommons.org/publicdomain/zero/1.0/
+prefixes:
+  venomx: https://w3id.org/biolink/biolinkml/venomx/
+  linkml: https://w3id.org/linkml/
+
+default_prefix: venomx
+
+imports:
+  - linkml:types
+
+classes:
+
+  Embedding:
+    attributes:
+      id:
+        description: The identifier for named object
+        range: string
+        identifier: true
+      text:
+        description: The text for named object
+        range: string
+      values:
+        implements: linkml:Array
+        description: The embedding for named object
+        range: float
+        multivalued: true
