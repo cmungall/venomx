@@ -10,6 +10,11 @@ METADATA = "metadata"
 
 @lru_cache
 def pyarrow_schema() -> pa.Schema:
+    """
+    Schema for the embeddings table.
+
+    :return:
+    """
     return pa.schema(
         [
             (ID, pa.string()),
