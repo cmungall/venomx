@@ -1,6 +1,6 @@
 """Command line interface for venomx."""
+
 import logging
-import sys
 
 import click
 
@@ -8,7 +8,7 @@ __all__ = [
     "main",
 ]
 
-from venomx.tools.file_io import load_index, EmbeddingFormat, save_index
+from venomx.tools.file_io import EmbeddingFormat, load_index, save_index
 
 logger = logging.getLogger(__name__)
 
@@ -34,6 +34,7 @@ output_option = click.option(
     type=click.Path(),
     help="Output path.",
 )
+
 
 @click.group()
 @click.option("-v", "--verbose", count=True)
@@ -80,7 +81,6 @@ def info(input_file: str):
     """Show information."""
     ix = load_index(input_file, check=True)
     print(f"Num objects: {len(ix.objects)}")
-
 
 
 if __name__ == "__main__":

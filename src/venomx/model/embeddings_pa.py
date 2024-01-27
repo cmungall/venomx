@@ -10,7 +10,9 @@ METADATA = "metadata"
 
 @lru_cache
 def pyarrow_schema() -> pa.Schema:
-    return pa.schema([
+    return pa.schema(
+        [
             (ID, pa.string()),
             (VALUES, pa.list_(pa.float32())),
-        ])
+        ]
+    )

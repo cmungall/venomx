@@ -1,19 +1,19 @@
 import logging
 from enum import Enum
 from pathlib import Path
-from typing import Union, Tuple, Optional, List, Dict
+from typing import Dict, List, Optional, Tuple, Union
 
 import numpy as np
 import pandas as pd
-import pyarrow.parquet as pq
 import pyarrow as pa
+import pyarrow.parquet as pq
 import yaml
 
 import venomx as vx
 from venomx.model.embeddings_pa import pyarrow_schema
 
-
 logger = logging.getLogger(__name__)
+
 
 class EmbeddingFormat(str, Enum):
     PARQUET = "parquet"
@@ -21,12 +21,15 @@ class EmbeddingFormat(str, Enum):
     JSON = "json"
 
 
-SUFFIX_MAP = {
-    EmbeddingFormat.PARQUET: ".parquet"
-}
+SUFFIX_MAP = {EmbeddingFormat.PARQUET: ".parquet"}
 
 
-def embeddings_file_tuple(path: Union[str, Path], embedding_format: Optional[EmbeddingFormat] = EmbeddingFormat.PARQUET, allow_bundled=False, exists_check=True) -> Tuple[Path, Optional[Path], EmbeddingFormat]:
+def embeddings_file_tuple(
+    path: Union[str, Path],
+    embedding_format: Optional[EmbeddingFormat] = EmbeddingFormat.PARQUET,
+    allow_bundled=False,
+    exists_check=True,
+) -> Tuple[Path, Optional[Path], EmbeddingFormat]:
     """
     Given a path, return a tuple of the metadata file and embedded data file.
 
@@ -54,15 +57,17 @@ def embeddings_file_tuple(path: Union[str, Path], embedding_format: Optional[Emb
     return metadata, embeddings, embedding_format
 
 
-def load_embeddings_as_pandas(self, source: Union[str, Path], format: EmbeddingFormat = EmbeddingFormat.PARQUET, **kwargs) -> pd.DataFrame:
-       if format == EmbeddingFormat.PARQUET:
-           read_table = pq.read_table(str(source))
-           df = read_table.to_pandas()
-           df['values'] = df['values'].apply(lambda x: x.tolist() if isinstance(x, np.ndarray) else x)
-           # df['values'] = df['values'].apply(lambda x: list(x) if isinstance(x, tuple) else x)
-           return df
-       else:
-          raise ValueError(f"Unsupported format: {format}")
+def load_embeddings_as_pandas(
+    self, source: Union[str, Path], format: EmbeddingFormat = EmbeddingFormat.PARQUET, **kwargs
+) -> pd.DataFrame:
+    if format == EmbeddingFormat.PARQUET:
+        read_table = pq.read_table(str(source))
+        df = read_table.to_pandas()
+        df["values"] = df["values"].apply(lambda x: x.tolist() if isinstance(x, np.ndarray) else x)
+        # df['values'] = df['values'].apply(lambda x: list(x) if isinstance(x, tuple) else x)
+        return df
+    else:
+        raise ValueError(f"Unsupported format: {format}")
 
 
 def _is_all_in_one(format: EmbeddingFormat) -> bool:
@@ -126,8 +131,9 @@ def validate(ix: vx.Index, **kwargs):
         if ix.embeddings_dimensions is None:
             ix.embeddings_dimensions = vseries_len
         if vseries_len != ix.embeddings_dimensions:
-            raise ValueError("Index has inconsistent embeddings dimensions: "
-                             f"{vseries_len} != {ix.embeddings_dimensions}")
+            raise ValueError(
+                "Index has inconsistent embeddings dimensions: " f"{vseries_len} != {ix.embeddings_dimensions}"
+            )
 
 
 def save_index(ix: vx.Index, target: Union[str, Path], format: EmbeddingFormat = EmbeddingFormat.PARQUET, **kwargs):
@@ -192,5 +198,3 @@ def populate_embeddings_list(ix: vx.Index) -> List[Dict[str, list[float]]]:
             )
             embeddings.append({"id": row["id"], "values": row["values"]})
     return embeddings
-
-

@@ -1,7 +1,7 @@
 import pytest
-
-from tests import TEMP_TEST_YAML, OUTPUT_DIR, TEMP_COMBINED_YAML
 from venomx.tools.cli import main
+
+from tests import OUTPUT_DIR, TEMP_COMBINED_YAML, TEMP_TEST_YAML
 
 
 def test_help(runner):
@@ -16,16 +16,25 @@ def test_help(runner):
     assert "validate" in result.output
 
 
-
-@pytest.mark.parametrize("command,options,arguments,passes,outpath,expected", [
-    ("validate", ["--help"], [], True, None, "validate"),
-    ("validate", [str(TEMP_TEST_YAML)], [], True, None, ""),
-    ("validate", [str(TEMP_COMBINED_YAML)], ["-f", "yaml"], True, None, ""),
-    ("convert", [str(TEMP_TEST_YAML)], ["-o", str(OUTPUT_DIR / "tmp.yaml")], True, None, ""),
-    ("convert", [str(TEMP_TEST_YAML)], ["-f", "parquet", "-o", str(OUTPUT_DIR / "tmp.yaml")], True, None, ""),
-    ("convert", [str(TEMP_TEST_YAML)], ["-t", "yaml", "-o", str(OUTPUT_DIR / "all_in_one.yaml")], True, None, ""),
-    ("convert", [str(TEMP_COMBINED_YAML)], ["-f", "yaml", "-o", str(OUTPUT_DIR / "all_in_one.yaml")], True, None, ""),
-])
+@pytest.mark.parametrize(
+    "command,options,arguments,passes,outpath,expected",
+    [
+        ("validate", ["--help"], [], True, None, "validate"),
+        ("validate", [str(TEMP_TEST_YAML)], [], True, None, ""),
+        ("validate", [str(TEMP_COMBINED_YAML)], ["-f", "yaml"], True, None, ""),
+        ("convert", [str(TEMP_TEST_YAML)], ["-o", str(OUTPUT_DIR / "tmp.yaml")], True, None, ""),
+        ("convert", [str(TEMP_TEST_YAML)], ["-f", "parquet", "-o", str(OUTPUT_DIR / "tmp.yaml")], True, None, ""),
+        ("convert", [str(TEMP_TEST_YAML)], ["-t", "yaml", "-o", str(OUTPUT_DIR / "all_in_one.yaml")], True, None, ""),
+        (
+            "convert",
+            [str(TEMP_COMBINED_YAML)],
+            ["-f", "yaml", "-o", str(OUTPUT_DIR / "all_in_one.yaml")],
+            True,
+            None,
+            "",
+        ),
+    ],
+)
 def test_all(create_test_index_files, runner, command, options, arguments, passes, outpath, expected):
     """
     Tests multiple commands

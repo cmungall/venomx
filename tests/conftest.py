@@ -1,8 +1,8 @@
 import pytest
 from click.testing import CliRunner
-
-from tests import TEMP_TEST_YAML, OUTPUT_DIR
 from venomx.tools.file_io import save_index
+
+from tests import OUTPUT_DIR, TEMP_TEST_YAML
 
 
 @pytest.fixture

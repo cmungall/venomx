@@ -1,8 +1,9 @@
-import pandas as pd
 import numpy as np
+import pandas as pd
 import venomx as vx
+from venomx.tools.file_io import load_index, save_index
+
 from tests import OUTPUT_DIR
-from venomx.tools.file_io import save_index, load_index
 
 ID = "id"
 NAME = "name"
@@ -35,4 +36,3 @@ def test_save_load():
     assert df2["id"].equals(df["id"])
     assert np.isclose(first_arr[0], first_arr2[0])
     assert np.isclose(df2["values"].tolist(), df["values"].tolist()).all()
-
