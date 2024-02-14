@@ -29,3 +29,7 @@ classes:
         description: The embedding for named object
         range: float
         multivalued: true
+        array:
+          exact_number_dimensions: 1
+
+      

@@ -21,5 +21,5 @@ doctest:
 
 models: $(MODEL)/venomx.py
 
-$(MODEL)/%.py: $(MODEL)/%.yaml
+$(MODEL)/%.py: $(MODEL)/%.yaml $(MODEL)/embedding.yaml
 	$(RUN) gen-pydantic --pydantic-version 2 $< > $@.tmp && mv $@.tmp $@

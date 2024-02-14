@@ -17,7 +17,7 @@ pandas = "^2.2.0"
 pytest = {version = ">=7.1.2"}
 tox = {version = ">=3.25.1"}
 pre-commit = {version = ">=3.3.3"}
-linkml = "^1.6.9"
+linkml = "^1.7.2"
 
 [tool.poetry.group.docs]
 optional = true
