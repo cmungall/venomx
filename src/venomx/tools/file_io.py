@@ -64,8 +64,12 @@ def load_embeddings_as_pandas(
     if format == EmbeddingFormat.PARQUET:
         read_table = pq.read_table(str(source))
         df = read_table.to_pandas()
+        if "values" not in df.columns:
+            df["values"] = list(df.values)
         df["values"] = df["values"].apply(lambda x: x.tolist() if isinstance(x, np.ndarray) else x)
-        # df['values'] = df['values'].apply(lambda x: list(x) if isinstance(x, tuple) else x)
+
+        if "id" not in df.columns:
+            df["id"] = list(df.index)
         return df
     else:
         raise ValueError(f"Unsupported format: {format}")
