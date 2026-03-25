@@ -7,21 +7,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@v3.0.2
+      uses: actions/checkout@v6.0.2
       with:
         fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
 
     - name: Set up Python 3.
       uses: actions/setup-python@v3
       with:
-        python-version: 3.9
+        python-version: 3.13
 
-    - name: Install Poetry.
-      uses: snok/install-poetry@v1.3.1
+    - name: Install uv
+      uses: astral-sh/setup-uv@v7.6.0
 
     - name: Install dependencies.
       run: |
-        poetry install --with docs
+        uv sync --with docs
 
     - name: Build documentation.
       run: |
@@ -29,13 +29,13 @@ jobs:
         mkdir gh-pages
         touch gh-pages/.nojekyll
         cd docs/
-        poetry run sphinx-apidoc -o . ../src/venomx/ --ext-autodoc -f
-        poetry run sphinx-build -b html . _build
+        uv run sphinx-apidoc -o . ../src/venomx/ --ext-autodoc -f
+        uv run sphinx-build -b html . _build
         cp -r _build/* ../gh-pages/
 
     - name: Deploy documentation.
       if: ${{ github.event_name == 'push' }}
-      uses: JamesIves/github-pages-deploy-action@v4.4.1
+      uses: JamesIves/github-pages-deploy-action@v4.8.0
       with:
         branch: gh-pages
         force: true

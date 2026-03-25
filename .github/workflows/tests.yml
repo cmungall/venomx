@@ -1,4 +1,4 @@
-name: venomx QC
+name: venomx tests
 
 on:
   workflow_dispatch:
@@ -16,7 +16,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6.0.2
-
+      
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v6.2.0
         with:
@@ -28,8 +28,5 @@ jobs:
       - name: Install dependencies
         run: uv sync --dev
 
-      - name: Check common spelling errors
-        run: uv run tox -e codespell
-
-      - name: Check code quality with flake8
-        run: uv run tox -e lint
+      - name: Test with pytest and generate coverage file
+        run: uv run pytest tests
