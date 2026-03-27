@@ -1,0 +1,39 @@
+name: Dry Run Publish Python Package (No communication with pypi)
+
+on:
+  workflow_dispatch:
+  release:
+    types: [created]
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-n-publish:
+    name: Build and publish Python 🐍 distributions 📦 to PyPI
+    runs-on: ubuntu-latest
+    # needs: [test]
+    #environment: release
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/checkout@v6.0.2
+
+      - name: Set up Python
+        uses: actions/setup-python@v6.2.0
+        with:
+          python-version: 3.13
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7.6.0
+
+      - name: Install dependencies.
+        run: |
+          uv sync --with docs
+
+      - name: Build source and wheel archives
+        run: uv build
+
+#      - name: Publish
+#        uses: pypa/gh-action-pypi-publish@v1.13.0
