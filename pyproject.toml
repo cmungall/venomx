@@ -1,6 +1,7 @@
 [project]
 name = "venomx"
-version = "0.0.0"
+dynamic = ["version"]
+#version = "0.0.0"
 description = "venomx"
 authors = [
     {name="Chris Mungall", email="cjmungall@lbl.gov"},
@@ -44,6 +45,7 @@ docs=[
 venomx = "venomx.tools.cli:main"
 
 [tool.uv-dynamic-versioning]
+fallback-version = "0.0.0"
 enable = true
 vcs = "git"
 style = "pep440"
@@ -113,3 +115,6 @@ quiet-level = 3
 [build-system]
 requires = ["hatchling", "uv-dynamic-versioning"]
 build-backend = "hatchling.build"
+
+[tool.hatch.version]
+source = "uv-dynamic-versioning"
