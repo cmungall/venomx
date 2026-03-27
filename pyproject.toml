@@ -18,7 +18,6 @@ dependencies = [
     "pydantic",
 ]
 
-
 [dependency-groups]
 
 dev = [
@@ -100,7 +99,6 @@ target-version = "py310"
     "D",
     "I"
 ]
-
 
 [tool.ruff.lint.mccabe]
 # Unlike Flake8, default to a complexity level of 10.
