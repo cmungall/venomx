@@ -30,7 +30,7 @@ jobs:
 
       - name: Install dependencies.
         run: |
-          uv sync --with docs
+          uv sync --extra docs
 
       - name: Build source and wheel archives
         run: uv build
