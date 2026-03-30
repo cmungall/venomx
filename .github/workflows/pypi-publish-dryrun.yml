@@ -29,6 +29,13 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v7.6.0
 
+      - name: Git url.
+        run: |
+          echo "$(git config --get remote.origin.url)"
+      - name: Git describe.
+        run: |
+          echo "$(git describe)"
+
       - name: Test tags.
         run: |
           echo "$(git describe --tags)"
