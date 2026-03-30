@@ -28,7 +28,6 @@ class ConfiguredBaseModel(BaseModel):
 
 
 class Index(ConfiguredBaseModel):
-
     """
     A collection of named objects
     """
@@ -51,7 +50,6 @@ class Index(ConfiguredBaseModel):
 
 
 class Prefix(ConfiguredBaseModel):
-
     """
     A prefix
     """
@@ -61,7 +59,6 @@ class Prefix(ConfiguredBaseModel):
 
 
 class Dataset(ConfiguredBaseModel):
-
     """
     A description of the dataset that the index is over. Note that this is not intended to be a comprehensive description of the dataset (use other standards for this), but enough to give context to the index.
     """
@@ -77,7 +74,6 @@ class Dataset(ConfiguredBaseModel):
 
 
 class Model(ConfiguredBaseModel):
-
     """
     A model
     """
@@ -92,7 +88,6 @@ class Model(ConfiguredBaseModel):
 
 
 class ModelInputMethod(ConfiguredBaseModel):
-
     """
     A method for generating the input for an embedding model. This might be as simple as extracting the label (name) of the object, or it might be involve concatenation of multiple fields.
     """
@@ -101,7 +96,6 @@ class ModelInputMethod(ConfiguredBaseModel):
 
 
 class NamedObject(ConfiguredBaseModel):
-
     """
     A named object
     """
@@ -119,7 +113,6 @@ class Embedding(ConfiguredBaseModel):
 
 
 class MetadataObject(ConfiguredBaseModel):
-
     """
     A metadata object
     """
